@@ -1,5 +1,9 @@
 use crate::constants::ofxstatus;
 use openfx_sys;
+pub use openfx_sys::{
+    OfxHost, OfxImageClipHandle, OfxImageEffectHandle, OfxParamHandle, OfxParamSetHandle,
+    OfxPropertySetHandle, OfxRectD, OfxRectI, OfxTime,
+};
 
 #[derive(Eq, PartialEq)]
 #[must_use]
