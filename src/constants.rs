@@ -9,25 +9,7 @@ macro_rules! constant {
 }
 
 pub mod ofxstatus {
-    use crate::types::OfxStatus;
-    pub const OK: OfxStatus = OfxStatus::from_i32(0);
-    pub const Failed: OfxStatus = OfxStatus::from_i32(1);
-    pub const ErrFatal: OfxStatus = OfxStatus::from_i32(2);
-    pub const ErrUnknown: OfxStatus = OfxStatus::from_i32(3);
-    pub const ErrMissingHostFeature: OfxStatus = OfxStatus::from_i32(4);
-    pub const ErrUnsupported: OfxStatus = OfxStatus::from_i32(5);
-    pub const ErrExists: OfxStatus = OfxStatus::from_i32(6);
-    pub const ErrFormat: OfxStatus = OfxStatus::from_i32(7);
-    pub const ErrMemory: OfxStatus = OfxStatus::from_i32(8);
-    pub const ErrBadHandle: OfxStatus = OfxStatus::from_i32(9);
-    pub const ErrBadIndex: OfxStatus = OfxStatus::from_i32(10);
-    pub const ErrValue: OfxStatus = OfxStatus::from_i32(11);
-    pub const ReplyYes: OfxStatus = OfxStatus::from_i32(12);
-    pub const ReplyNo: OfxStatus = OfxStatus::from_i32(13);
-    pub const ReplyDefault: OfxStatus = OfxStatus::from_i32(14);
-    pub const ErrImageFormat: OfxStatus = OfxStatus::from_i32(1000);
-    pub const GLOutOfMemory: OfxStatus = OfxStatus::from_i32(1001);
-    pub const GLRenderFailed: OfxStatus = OfxStatus::from_i32(1002);
+    pub use openfx_sys::ofxstatus::*;
 }
 
 constant!(ActionLoad, kOfxActionLoad);

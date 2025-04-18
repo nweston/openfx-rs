@@ -162,7 +162,7 @@ macro_rules! wrap {
     ) => {
         pub fn $fnname(&self, $($name: $type,)+) -> OfxStatus {
             $(assert!($name.is_valid());)+
-            unsafe {OfxStatus::new((self.suite.$fnname.unwrap())($($name.to_ofx(),)+)) }
+            unsafe {(self.suite.$fnname.unwrap())($($name.to_ofx(),)+) }
         }
     };
 }
@@ -614,7 +614,7 @@ impl ParameterSuiteV1 {
     where
         [T; N]: ParamGetValue,
     {
-        OfxStatus::new(result.get_value(self.suite.paramGetValue.unwrap(), paramHandle))
+        result.get_value(self.suite.paramGetValue.unwrap(), paramHandle)
     }
 
     pub fn paramGetValueAtTime<T, const N: usize>(
@@ -626,11 +626,11 @@ impl ParameterSuiteV1 {
     where
         [T; N]: ParamGetValue,
     {
-        OfxStatus::new(result.get_value_at_time(
+        result.get_value_at_time(
             self.suite.paramGetValueAtTime.unwrap(),
             paramHandle,
             time,
-        ))
+        )
     }
 
     wrap!(paramGetDerivative(paramHandle: OfxParamHandle, time: OfxTime));
@@ -647,7 +647,7 @@ impl ParameterSuiteV1 {
     where
         [T; N]: ParamSetValue,
     {
-        OfxStatus::new(result.set_value(self.suite.paramSetValue.unwrap(), paramHandle))
+        result.set_value(self.suite.paramSetValue.unwrap(), paramHandle)
     }
 
     pub fn paramSetValueAtTime<T, const N: usize>(
@@ -659,11 +659,11 @@ impl ParameterSuiteV1 {
     where
         [T; N]: ParamSetValue,
     {
-        OfxStatus::new(result.set_value_at_time(
+        result.set_value_at_time(
             self.suite.paramSetValueAtTime.unwrap(),
             paramHandle,
             time,
-        ))
+        )
     }
 
     wrap!(paramGetNumKeys(
