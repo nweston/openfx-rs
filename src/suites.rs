@@ -338,6 +338,246 @@ impl PropertySuiteV1 {
         count: *mut c_int));
 }
 
+type ParamGetValueFn =
+    unsafe extern "C" fn(paramHandle: OfxParamHandle, ...) -> openfx_sys::OfxStatus;
+
+type ParamGetValueAtTimeFn = unsafe extern "C" fn(
+    paramHandle: OfxParamHandle,
+    time: OfxTime,
+    ...
+) -> openfx_sys::OfxStatus;
+
+pub trait ParamGetValue {
+    fn get_value(
+        self,
+        fun: ParamGetValueFn,
+        handle: OfxParamHandle,
+    ) -> openfx_sys::OfxStatus;
+
+    fn get_value_at_time(
+        self,
+        fun: ParamGetValueAtTimeFn,
+        handle: OfxParamHandle,
+        time: OfxTime,
+    ) -> openfx_sys::OfxStatus;
+}
+
+impl ParamGetValue for [*mut c_void; 1] {
+    fn get_value(
+        self,
+        fun: ParamGetValueFn,
+        handle: OfxParamHandle,
+    ) -> openfx_sys::OfxStatus {
+        assert!(self[0].is_valid());
+        unsafe { fun(handle, self[0]) }
+    }
+
+    fn get_value_at_time(
+        self,
+        fun: ParamGetValueAtTimeFn,
+        handle: OfxParamHandle,
+        time: OfxTime,
+    ) -> openfx_sys::OfxStatus {
+        assert!(self[0].is_valid());
+        unsafe { fun(handle, time, self[0]) }
+    }
+}
+
+impl ParamGetValue for [*mut c_void; 2] {
+    fn get_value(
+        self,
+        fun: ParamGetValueFn,
+        handle: OfxParamHandle,
+    ) -> openfx_sys::OfxStatus {
+        assert!(self[0].is_valid());
+        assert!(self[1].is_valid());
+        unsafe { fun(handle, self[0], self[1]) }
+    }
+
+    fn get_value_at_time(
+        self,
+        fun: ParamGetValueAtTimeFn,
+        handle: OfxParamHandle,
+        time: OfxTime,
+    ) -> openfx_sys::OfxStatus {
+        assert!(self[0].is_valid());
+        assert!(self[1].is_valid());
+        unsafe { fun(handle, time, self[0], self[1]) }
+    }
+}
+
+impl ParamGetValue for [*mut c_void; 3] {
+    fn get_value(
+        self,
+        fun: ParamGetValueFn,
+        handle: OfxParamHandle,
+    ) -> openfx_sys::OfxStatus {
+        assert!(self[0].is_valid());
+        assert!(self[1].is_valid());
+        assert!(self[2].is_valid());
+        unsafe { fun(handle, self[0], self[1], self[2]) }
+    }
+
+    fn get_value_at_time(
+        self,
+        fun: ParamGetValueAtTimeFn,
+        handle: OfxParamHandle,
+        time: OfxTime,
+    ) -> openfx_sys::OfxStatus {
+        assert!(self[0].is_valid());
+        assert!(self[1].is_valid());
+        assert!(self[2].is_valid());
+        unsafe { fun(handle, time, self[0], self[1], self[2]) }
+    }
+}
+
+impl ParamGetValue for [*mut c_void; 4] {
+    fn get_value(
+        self,
+        fun: ParamGetValueFn,
+        handle: OfxParamHandle,
+    ) -> openfx_sys::OfxStatus {
+        assert!(self[0].is_valid());
+        assert!(self[1].is_valid());
+        assert!(self[2].is_valid());
+        assert!(self[3].is_valid());
+        unsafe { fun(handle, self[0], self[1], self[2], self[3]) }
+    }
+
+    fn get_value_at_time(
+        self,
+        fun: ParamGetValueAtTimeFn,
+        handle: OfxParamHandle,
+        time: OfxTime,
+    ) -> openfx_sys::OfxStatus {
+        assert!(self[0].is_valid());
+        assert!(self[1].is_valid());
+        assert!(self[2].is_valid());
+        assert!(self[3].is_valid());
+        unsafe { fun(handle, time, self[0], self[1], self[2], self[3]) }
+    }
+}
+
+type ParamSetValueFn =
+    unsafe extern "C" fn(paramHandle: OfxParamHandle, ...) -> openfx_sys::OfxStatus;
+
+type ParamSetValueAtTimeFn = unsafe extern "C" fn(
+    paramHandle: OfxParamHandle,
+    time: OfxTime,
+    ...
+) -> openfx_sys::OfxStatus;
+
+pub trait ParamSetValue {
+    fn set_value(
+        self,
+        fun: ParamSetValueFn,
+        handle: OfxParamHandle,
+    ) -> openfx_sys::OfxStatus;
+
+    fn set_value_at_time(
+        self,
+        fun: ParamSetValueAtTimeFn,
+        handle: OfxParamHandle,
+        time: OfxTime,
+    ) -> openfx_sys::OfxStatus;
+}
+
+impl ParamSetValue for [*const c_void; 1] {
+    fn set_value(
+        self,
+        fun: ParamSetValueFn,
+        handle: OfxParamHandle,
+    ) -> openfx_sys::OfxStatus {
+        assert!(self[0].is_valid());
+        unsafe { fun(handle, self[0]) }
+    }
+
+    fn set_value_at_time(
+        self,
+        fun: ParamSetValueAtTimeFn,
+        handle: OfxParamHandle,
+        time: OfxTime,
+    ) -> openfx_sys::OfxStatus {
+        assert!(self[0].is_valid());
+        unsafe { fun(handle, time, self[0]) }
+    }
+}
+
+impl ParamSetValue for [*const c_void; 2] {
+    fn set_value(
+        self,
+        fun: ParamSetValueFn,
+        handle: OfxParamHandle,
+    ) -> openfx_sys::OfxStatus {
+        assert!(self[0].is_valid());
+        assert!(self[1].is_valid());
+        unsafe { fun(handle, self[0], self[1]) }
+    }
+
+    fn set_value_at_time(
+        self,
+        fun: ParamSetValueAtTimeFn,
+        handle: OfxParamHandle,
+        time: OfxTime,
+    ) -> openfx_sys::OfxStatus {
+        assert!(self[0].is_valid());
+        assert!(self[1].is_valid());
+        unsafe { fun(handle, time, self[0], self[1]) }
+    }
+}
+
+impl ParamSetValue for [*const c_void; 3] {
+    fn set_value(
+        self,
+        fun: ParamSetValueFn,
+        handle: OfxParamHandle,
+    ) -> openfx_sys::OfxStatus {
+        assert!(self[0].is_valid());
+        assert!(self[1].is_valid());
+        assert!(self[2].is_valid());
+        unsafe { fun(handle, self[0], self[1], self[2]) }
+    }
+
+    fn set_value_at_time(
+        self,
+        fun: ParamSetValueAtTimeFn,
+        handle: OfxParamHandle,
+        time: OfxTime,
+    ) -> openfx_sys::OfxStatus {
+        assert!(self[0].is_valid());
+        assert!(self[1].is_valid());
+        assert!(self[2].is_valid());
+        unsafe { fun(handle, time, self[0], self[1], self[2]) }
+    }
+}
+
+impl ParamSetValue for [*const c_void; 4] {
+    fn set_value(
+        self,
+        fun: ParamSetValueFn,
+        handle: OfxParamHandle,
+    ) -> openfx_sys::OfxStatus {
+        assert!(self[0].is_valid());
+        assert!(self[1].is_valid());
+        assert!(self[2].is_valid());
+        assert!(self[3].is_valid());
+        unsafe { fun(handle, self[0], self[1], self[2], self[3]) }
+    }
+
+    fn set_value_at_time(
+        self,
+        fun: ParamSetValueAtTimeFn,
+        handle: OfxParamHandle,
+        time: OfxTime,
+    ) -> openfx_sys::OfxStatus {
+        assert!(self[0].is_valid());
+        assert!(self[1].is_valid());
+        assert!(self[2].is_valid());
+        assert!(self[3].is_valid());
+        unsafe { fun(handle, time, self[0], self[1], self[2], self[3]) }
+    }
+}
+
 #[repr(C)]
 pub struct ParameterSuiteV1 {
     suite: &'static OfxParameterSuiteV1,
@@ -366,29 +606,66 @@ impl ParameterSuiteV1 {
         paramHandle: OfxParamHandle,
         propHandle: *mut OfxPropertySetHandle));
 
-    pub fn paramGetValue(
+    pub fn paramGetValue<T, const N: usize>(
         &self,
-    ) -> unsafe extern "C" fn(paramHandle: OfxParamHandle, ...) -> openfx_sys::OfxStatus {
-        self.suite.paramGetValue.unwrap()
+        paramHandle: OfxParamHandle,
+        result: [T; N],
+    ) -> OfxStatus
+    where
+        [T; N]: ParamGetValue,
+    {
+        OfxStatus::new(result.get_value(self.suite.paramGetValue.unwrap(), paramHandle))
     }
-    // pub paramGetValueAtTime: unsafe extern "C" fn(
-    //     paramHandle: OfxParamHandle,
-    //     time: OfxTime,
-    //     ...
-    // ) -> OfxStatus,
+
+    pub fn paramGetValueAtTime<T, const N: usize>(
+        &self,
+        paramHandle: OfxParamHandle,
+        time: OfxTime,
+        result: [T; N],
+    ) -> OfxStatus
+    where
+        [T; N]: ParamGetValue,
+    {
+        OfxStatus::new(result.get_value_at_time(
+            self.suite.paramGetValueAtTime.unwrap(),
+            paramHandle,
+            time,
+        ))
+    }
 
     wrap!(paramGetDerivative(paramHandle: OfxParamHandle, time: OfxTime));
     wrap!(paramGetIntegral(
         paramHandle: OfxParamHandle,
         time1: OfxTime,
         time2: OfxTime));
-    // pub paramSetValue:
-    //     unsafe extern "C" fn(paramHandle: OfxParamHandle, ...) -> OfxStatus,
-    // pub paramSetValueAtTime: unsafe extern "C" fn(
-    //     paramHandle: OfxParamHandle,
-    //     time: OfxTime, // time in frames
-    //     ...
-    // ) -> OfxStatus,
+
+    pub fn paramSetValue<T, const N: usize>(
+        &self,
+        paramHandle: OfxParamHandle,
+        result: [T; N],
+    ) -> OfxStatus
+    where
+        [T; N]: ParamSetValue,
+    {
+        OfxStatus::new(result.set_value(self.suite.paramSetValue.unwrap(), paramHandle))
+    }
+
+    pub fn paramSetValueAtTime<T, const N: usize>(
+        &self,
+        paramHandle: OfxParamHandle,
+        time: OfxTime,
+        result: [T; N],
+    ) -> OfxStatus
+    where
+        [T; N]: ParamSetValue,
+    {
+        OfxStatus::new(result.set_value_at_time(
+            self.suite.paramSetValueAtTime.unwrap(),
+            paramHandle,
+            time,
+        ))
+    }
+
     wrap!(paramGetNumKeys(
         paramHandle: OfxParamHandle,
         numberOfKeys: *mut c_uint));
