@@ -5,3 +5,6 @@ edition = "2024"
 
 [dependencies]
 openfx-sys = "0.1.0"
+
+[features]
+derive_serde = ["openfx-sys/derive_serde"]
